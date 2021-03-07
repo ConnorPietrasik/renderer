@@ -1,0 +1,6 @@
+.vs
+bin
+obj
+addons.make
+icon.rc
+RayTracer.*
