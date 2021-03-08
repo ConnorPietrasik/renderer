@@ -2,10 +2,10 @@
 
 #include "ofMain.h"
 #include "Constants.h"
-#include "Point.h"
-#include "Object.h"
+#include "math/Point.h"
+#include "objects/Object.h"
 #include "Light.h"
-#include "Ray.h"
+#include "math/Ray.h"
 
 class ofApp : public ofBaseApp{
 	int processorCount;

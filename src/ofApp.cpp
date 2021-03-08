@@ -1,13 +1,13 @@
 #include "ofApp.h"
-#include "raytrace.h"
-#include "Sphere.h"
-#include "Triangle.h"
-#include "math.h"
-#include "raymarch.h"
-#include "Phong.h"
-#include "Plane.h"
-#include "Torus.h"
-#include "Box.h"
+#include "math/raytrace.h"
+#include "objects/Sphere.h"
+#include "objects/Triangle.h"
+#include "math/math.h"
+#include "math/raymarch.h"
+#include "shaders/Phong.h"
+#include "objects/Plane.h"
+#include "objects/Torus.h"
+#include "objects/Box.h"
 
 
 //--------------------------------------------------------------

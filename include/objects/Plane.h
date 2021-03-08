@@ -1,6 +1,6 @@
 #pragma once
-#include "Object.h"
-#include "Vector.h"
+#include "objects/Object.h"
+#include "math/Vector.h"
 
 //NEW
 class Plane : public Object {

@@ -1,5 +1,5 @@
 #pragma once
-#include "Point.h"
+#include "math/Point.h"
 
 struct Light {
 	Point pos;

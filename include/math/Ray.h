@@ -1,6 +1,6 @@
 #pragma once
-#include "Point.h"
-#include "Vector.h"
+#include "math/Point.h"
+#include "math/Vector.h"
 
 struct Ray {
 	Point P;

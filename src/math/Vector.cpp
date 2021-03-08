@@ -1,7 +1,7 @@
-#include "Vector.h"
-#include "math.h"
+#include "math/Vector.h"
+#include "math/math.h"
 #include <cmath>
-#include "Point.h"
+#include "math/Point.h"
 
 double Vector::dot(const Vector& obj) const {
 	return x * obj.x + y * obj.y + z * obj.z;

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "math.h"
+#include "math/math.h"
 #include <cmath>
 
 struct Point;

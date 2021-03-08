@@ -1,8 +1,8 @@
 #pragma once
-#include "Object.h"
-#include "Vector.h"
-#include "math.h"
-#include "Point.h"
+#include "objects/Object.h"
+#include "math/Vector.h"
+#include "math/math.h"
+#include "math/Point.h"
 
 class Sphere : public Object {
 	Point pos;

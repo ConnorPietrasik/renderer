@@ -1,10 +1,10 @@
-#include "Phong.h"
-#include "Point.h"
-#include "Ray.h"
-#include "Object.h"
-#include "Vector.h"
+#include "shaders/Phong.h"
+#include "math/Point.h"
+#include "math/Ray.h"
+#include "objects/Object.h"
+#include "math/Vector.h"
 #include "Constants.h"
-#include "raymarch.h"
+#include "math/raymarch.h"
 #include <vector>
 #include <memory>
 

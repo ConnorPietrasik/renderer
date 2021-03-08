@@ -1,6 +1,6 @@
 #pragma once
-#include "Ray.h"
-#include "Point.h"
+#include "math/Ray.h"
+#include "math/Point.h"
 #include "Light.h"
 
 class Object {

@@ -1,6 +1,6 @@
 #pragma once
-#include "Object.h"
-#include "math.h"
+#include "objects/Object.h"
+#include "math/math.h"
 
 class Triangle : public Object {
 	Point p0;

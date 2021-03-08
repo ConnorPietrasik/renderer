@@ -1,5 +1,5 @@
-#include "raymarch.h"
-#include "Point.h"
+#include "math/raymarch.h"
+#include "math/Point.h"
 #include "Constants.h"
 #include <vector>
 #include <memory>

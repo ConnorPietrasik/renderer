@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Object.h"
-#include "Ray.h"
+#include "objects/Object.h"
+#include "math/Ray.h"
 #include <vector>
 #include <memory>
 

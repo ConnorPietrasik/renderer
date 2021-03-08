@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Object.h"
+#include "objects/Object.h"
 
 //NEW
 class Torus : public Object {
