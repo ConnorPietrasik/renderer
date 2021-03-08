@@ -16,11 +16,9 @@ class ofApp : public ofBaseApp{
 	std::vector<std::unique_ptr<Light>> lights;
 
 	//Function so it can be split into multiple threads
-	void colorRows(int start, int end) {}
+	void colorRows(int start, int end);
 
 	void rayTrace() {}
-	void rayTraceRows(int start, int end);
-	void rayMarchRows(int start, int end) {}
 
 public:
 	void setup();

@@ -41,12 +41,17 @@ public:
 	}
 
 	//NEW
+	//TODO make this actually result in a triangle instead of whatever it currently is
 	//Returns the shortest distance from the point to the triangle, more or less taken from https://www.iquilezles.org/www/articles/distfunctions/distfunctions.htm
 	double sdf(const Point& p) {
 		Vector pa = p - p0;
 		Vector pb = p - p1;
 		Vector pc = p - p2;
 		Vector nor = e0.cross(e2);
+
+		int test = (math::sign(e0.cross(nor).dot(pa)) +
+			math::sign(e1.cross(nor).dot(pb)) +
+			math::sign(e2.cross(nor).dot(pc) < 2.0));
 
 		return std::sqrt(
 			(math::sign(e0.cross(nor).dot(pa)) +

@@ -18,16 +18,3 @@ double math::pow(double x, int n) {
 	}
 	return ret;
 }
-
-double math::clamp(double x, double min, double max) {
-	if (x < min) return min;
-	if (x > max) return max;
-	return x;
-}
-
-int math::sign(double x) {
-	double eps = 0.00000001;
-	if (x > eps) return 1;
-	if (x < -eps) return -1;
-	return 0;
-}
