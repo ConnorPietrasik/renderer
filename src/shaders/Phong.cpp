@@ -8,37 +8,6 @@
 #include <vector>
 #include <memory>
 
-//TODO move this where it belongs and such. 
-//NEW
-//It also makes circles do some weird thing in the middle, but it looks cool so I'll leave it be for now (no time for lengthy debugging)
-Vector getNormalRM(const Point& p, const std::vector<std::unique_ptr<Object>>& objects) {	//More or less taken from lecture slide
-	double eps = 0.01;
-	double dp = raymarch::sceneSdf(p, objects).dist;
-	Vector n = { dp - raymarch::sceneSdf({p.x - eps, p.y, p.z}, objects).dist,
-				dp - raymarch::sceneSdf({p.x, p.y - eps, p.z}, objects).dist,
-				dp - raymarch::sceneSdf({p.x, p.y, p.z - eps}, objects).dist };
-	return n.getNormalized();
-}
-
-//TODO This belongs in raymarch, should have it choose between them and what not
-//NEW
-//Returns true if there is an object between the point and the light that isn't the object itself
-bool isShadowed(const Point& point, const Light* light, Object* obj, const std::vector<std::unique_ptr<Object>>& objects) {
-	Ray ray = { point, (light->pos - point).normalize() };
-
-	Point moving = ray.P;
-	auto closest = raymarch::sceneSdf(moving, objects);
-	for (int i = 0; i < constants::MARCH_ITER_LIMIT && closest.dist < constants::MARCH_MISS_THRESHOLD; i++) {
-		if (closest.dist < constants::MARCH_HIT_THRESHOLD && closest.obj != obj) {
-			return true;
-		}
-		moving = moving + (ray.D * closest.dist);
-		closest = raymarch::sceneSdf(moving, objects);
-	}
-
-	return false;
-}
-
 //Calculates the color of an object at a given point
 Color Phong::calculateColor(const Point& pos, Object* obj, const Ray& ray, const std::vector<std::unique_ptr<Light>>& lights,
 	const std::vector<std::unique_ptr<Object>>& objects) {
@@ -49,7 +18,7 @@ Color Phong::calculateColor(const Point& pos, Object* obj, const Ray& ray, const
 
 	//Things that don't change with different light
 	//Vector N = obj->getNormal(pos);
-	Vector N = getNormalRM(pos, objects);
+	Vector N = raymarch::getNormalRM(pos, objects);
 	Vector V = ray.P - pos;
 	V.normalize();
 
@@ -61,13 +30,11 @@ Color Phong::calculateColor(const Point& pos, Object* obj, const Ray& ray, const
 		Vector L = light->pos - pos;
 		L.normalize();
 
-		double nDotL = N.dot(L);
-
 		//So that it doesn't do negative colors if the light is in the other direction
-		if (nDotL > -0.001) {
+		if (N.dot(L) > 0) {
 
 			if (constants::SOFT_SHADOW_AMOUNT == 1) {
-				if (!isShadowed(pos, light.get(), obj, objects)) {
+				if (!raymarch::isShadowed(pos, light.get(), obj, objects)) {
 
 					diffuse += obj->getColor() * light->diffuse * N.dot(L);
 
