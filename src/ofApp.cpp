@@ -8,6 +8,7 @@
 #include "objects/Plane.h"
 #include "objects/Torus.h"
 #include "objects/Box.h"
+#include "Scene.h"
 
 
 //--------------------------------------------------------------
@@ -20,42 +21,42 @@ void ofApp::setup(){
 		}
 	}
 
-	cam.setPos({ 0, 0, 350 });
+	Scene::setCamPos({ 0, 0, 350 });
 
 	//Adding some spheres: (center, radius, normal_color, shininess, shiny_color, reflectivity)
-	objects.emplace_back(new Sphere({ 0, 0, 0 }, 50, { 1, 1, 1 }, 5));
-	objects.emplace_back(new Sphere({ 0, 90, 0 }, 40, { 1, 1, 1 }));
-	objects.emplace_back(new Sphere({ 0, 160, 0 }, 30, { 1, 1, 1 }));
+	Scene::addObject(new Sphere({ 0, 0, 0 }, 50, { 1, 1, 1 }, 5));
+	Scene::addObject(new Sphere({ 0, 90, 0 }, 40, { 1, 1, 1 }));
+	Scene::addObject(new Sphere({ 0, 160, 0 }, 30, { 1, 1, 1 }));
 
 	//Adding some triangles: (p0, p1, p2, normal_color, shininess, shiny_color, reflectivity)
-	//objects.emplace_back(new Triangle({ -100, 0, -150 }, { 0, 90, 0 }, { -100, 200, -50 }, { 1, 1, 1 }, 1));
-	//objects.emplace_back(new Triangle({ 100, 200, -50 }, { 0, 90, 0 }, { 100, 0, -150 }, { 1, 1, 1 }, 1));
+	//Scene::addObject(new Triangle({ -100, 0, -150 }, { 0, 90, 0 }, { -100, 200, -50 }, { 1, 1, 1 }, 1));
+	//Scene::addObject(new Triangle({ 100, 200, -50 }, { 0, 90, 0 }, { 100, 0, -150 }, { 1, 1, 1 }, 1));
 
 	//Adding some lights: (pos, ambient, diffuse, specular, radius)
-	//lights.emplace_back(new Light({ {-200, 0, 100}, {0.05, 0, 0}, {1, 0, 0}, {0.8, 0, 0}, 20 }));
-	//lights.emplace_back(new Light({ {200, 0, 100}, {0, 0, 0.05}, {0, 0, 1}, {0, 0, 0.8}, 20 }));
-	//lights.emplace_back(new Light({ {0, 0, 100}, {0, 0.05, 0}, {0, 1, 0}, {0, 0.8, 0}, 20 }));
+	//Scene::addLight(new Light({ {-200, 0, 100}, {0.05, 0, 0}, {1, 0, 0}, {0.8, 0, 0}, 20 }));
+	//Scene::addLight(new Light({ {200, 0, 100}, {0, 0, 0.05}, {0, 0, 1}, {0, 0, 0.8}, 20 }));
+	//Scene::addLight(new Light({ {0, 0, 100}, {0, 0.05, 0}, {0, 1, 0}, {0, 0.8, 0}, 20 }));
 
 	//TEST	/	NEW
-	objects.emplace_back(new Torus());
-	lights.emplace_back(new Light({ {0, 0, 350}, {0.05, 0, 0}, {0.5, 0, 0.7}, {0.8, 0, 0}, 20 }));
-	objects.emplace_back(new Plane({ 0, 1, 1 }, 50));
-	//objects.emplace_back(new Box());
+	Scene::addObject(new Torus());
+	Scene::addLight(new Light({ {0, 0, 350}, {0.05, 0, 0}, {0.5, 0, 0.7}, {0.8, 0, 0}, 20 }));
+	Scene::addObject(new Plane({ 0, 1, 1 }, 50));
+	//Scene::addObject(new Box());
 
 	//Walls
 	float wallReflectivity = 0;
-	//objects.emplace_back(new Triangle({ 100, -500, -500 }, { 100, -500, 500}, { 100, 500, 500}, { 1, 1, 1}, 0, { 0, 0, 0 }, wallReflectivity));
-	//objects.emplace_back(new Triangle({ 100, 500, 500 }, { 100, 500, -500 }, {100, -500, -500}, { 1, 1, 1 }, 0, { 0, 0, 0 }, wallReflectivity));
-	//objects.emplace_back(new Triangle({ -100, 500, 500 }, { -100, -500, 500 }, { -100, -500, -500 }, { 1, 1, 1 }, 0, { 0, 0, 0 }, wallReflectivity));
-	//objects.emplace_back(new Triangle({ -100, -500, -500 }, { -100, 500, -500 },  { -100, 500, 500 }, { 1, 1, 1 }, 0, { 0, 0, 0 }, wallReflectivity));
-	//objects.emplace_back(new Triangle({ -100, -500, -500 }, { 100, -500, -500 }, { 100, 500, -500 }, { 1, 1, 1 }, 0, { 0, 0, 0 }, wallReflectivity));
-	//objects.emplace_back(new Triangle({ 100, 500, -500 }, { -100, 500, -500 }, { -100, -500, -500 }, { 1, 1, 1 }, 0, { 0, 0, 0 }, wallReflectivity));
+	//Scene::addObject(new Triangle({ 100, -500, -500 }, { 100, -500, 500}, { 100, 500, 500}, { 1, 1, 1}, 0, { 0, 0, 0 }, wallReflectivity));
+	//Scene::addObject(new Triangle({ 100, 500, 500 }, { 100, 500, -500 }, {100, -500, -500}, { 1, 1, 1 }, 0, { 0, 0, 0 }, wallReflectivity));
+	//Scene::addObject(new Triangle({ -100, 500, 500 }, { -100, -500, 500 }, { -100, -500, -500 }, { 1, 1, 1 }, 0, { 0, 0, 0 }, wallReflectivity));
+	//Scene::addObject(new Triangle({ -100, -500, -500 }, { -100, 500, -500 },  { -100, 500, 500 }, { 1, 1, 1 }, 0, { 0, 0, 0 }, wallReflectivity));
+	//Scene::addObject(new Triangle({ -100, -500, -500 }, { 100, -500, -500 }, { 100, 500, -500 }, { 1, 1, 1 }, 0, { 0, 0, 0 }, wallReflectivity));
+	//Scene::addObject(new Triangle({ 100, 500, -500 }, { -100, 500, -500 }, { -100, -500, -500 }, { 1, 1, 1 }, 0, { 0, 0, 0 }, wallReflectivity));
 
 	//Floor
 	double floorY = -50;
 	float floorReflectivity = 0.25;
-	//objects.emplace_back(new Triangle({ -500, floorY, -500 }, { -500, floorY, 500 }, { 500, floorY, 500 }, { 1, 1, 1 }, 0, { 0, 0, 0 }, floorReflectivity));
-	//objects.emplace_back(new Triangle({ 500, floorY, 500 }, { 500, floorY, -500 }, { -500, floorY, -500 }, { 1, 1, 1 }, 0, { 0, 0, 0 }, floorReflectivity));
+	//Scene::addObject(new Triangle({ -500, floorY, -500 }, { -500, floorY, 500 }, { 500, floorY, 500 }, { 1, 1, 1 }, 0, { 0, 0, 0 }, floorReflectivity));
+	//Scene::addObject(new Triangle({ 500, floorY, 500 }, { 500, floorY, -500 }, { -500, floorY, -500 }, { 1, 1, 1 }, 0, { 0, 0, 0 }, floorReflectivity));
 
 	//Using all virtual processors for faster draws
 	SYSTEM_INFO sysinfo;
@@ -103,7 +104,7 @@ void ofApp::draw(){
 
 //Does the ray tracing for a certain amount of rows to speed things up
 void ofApp::colorRows(int start, int end) {
-	Point topLeft = { cam.getPos().x - (constants::IMAGE_WIDTH / 2), cam.getPos().y + (constants::IMAGE_HEIGHT / 2), cam.getPos().z - constants::SCREEN_DISTANCE };
+	Point topLeft = { Scene::getCamPos().x - (constants::IMAGE_WIDTH / 2), Scene::getCamPos().y + (constants::IMAGE_HEIGHT / 2), Scene::getCamPos().z - constants::SCREEN_DISTANCE };
 
 	for (int row = start; row < end; row++) {
 		for (int col = 0; col < constants::IMAGE_WIDTH; col++) {
@@ -115,27 +116,27 @@ void ofApp::colorRows(int start, int end) {
 					Point subPixel = { topLeft.x + col + ((double)subCol / constants::ANTI_ALIASING_AMOUNT),
 							topLeft.y - row + ((double)subRow / constants::ANTI_ALIASING_AMOUNT), topLeft.z };
 
-					Vector D = subPixel - cam.getPos();
-					Ray ray = { cam.getPos(), D.normalize() };
+					Vector D = subPixel - Scene::getCamPos();
+					Ray ray = { Scene::getCamPos(), D.normalize() };
 
 
 					switch (constants::RENDER_MODE) {
 					case 0:
 
-						auto min = raytrace::getNearestHit(ray, objects);
+						auto min = raytrace::getNearestHit(ray, Scene::getObjects());
 
 						//If the ray hit something, find the color
 						if (min.obj) {
-							Point touched = cam.getPos() + D * min.time;
-							total += Phong::calculateColor(touched, min.obj, ray, lights, objects);
+							Point touched = Scene::getCamPos() + D * min.time;
+							total += Phong::calculateColor(touched, min.obj, ray, Scene::getLights(), Scene::getObjects());
 						}
 						break;
 
 					//NEW
 					case 1:
 
-						auto hit = raymarch::getNearestHit(ray, objects);
-						if (hit.obj) total += Phong::calculateColor(hit.p, hit.obj, ray, lights, objects);
+						auto hit = raymarch::getNearestHit(ray, Scene::getObjects());
+						if (hit.obj) total += Phong::calculateColor(hit.p, hit.obj, ray, Scene::getLights(), Scene::getObjects());
 
 					}
 				}
