@@ -5,13 +5,14 @@
 #include "math/Point.h"
 #include "objects/Object.h"
 #include "Light.h"
+#include "Camera.h"
 #include "math/Ray.h"
 
 class ofApp : public ofBaseApp{
 	int processorCount;
 
 	Color pixels[constants::IMAGE_WIDTH][constants::IMAGE_HEIGHT];
-	Point camera;
+	Camera cam;
 	std::vector<std::unique_ptr<Object>> objects;
 	std::vector<std::unique_ptr<Light>> lights;
 

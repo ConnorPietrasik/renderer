@@ -20,7 +20,7 @@ void ofApp::setup(){
 		}
 	}
 
-	camera = { 0, 0, 350 };
+	cam.setPos({ 0, 0, 350 });
 
 	//Adding some spheres: (center, radius, normal_color, shininess, shiny_color, reflectivity)
 	objects.emplace_back(new Sphere({ 0, 0, 0 }, 50, { 1, 1, 1 }, 5));
@@ -103,7 +103,7 @@ void ofApp::draw(){
 
 //Does the ray tracing for a certain amount of rows to speed things up
 void ofApp::colorRows(int start, int end) {
-	Point topLeft = { camera.x - (constants::IMAGE_WIDTH / 2), camera.y + (constants::IMAGE_HEIGHT / 2), camera.z - constants::SCREEN_DISTANCE };
+	Point topLeft = { cam.getPos().x - (constants::IMAGE_WIDTH / 2), cam.getPos().y + (constants::IMAGE_HEIGHT / 2), cam.getPos().z - constants::SCREEN_DISTANCE };
 
 	for (int row = start; row < end; row++) {
 		for (int col = 0; col < constants::IMAGE_WIDTH; col++) {
@@ -115,8 +115,8 @@ void ofApp::colorRows(int start, int end) {
 					Point subPixel = { topLeft.x + col + ((double)subCol / constants::ANTI_ALIASING_AMOUNT),
 							topLeft.y - row + ((double)subRow / constants::ANTI_ALIASING_AMOUNT), topLeft.z };
 
-					Vector D = subPixel - camera;
-					Ray ray = { camera, D.normalize() };
+					Vector D = subPixel - cam.getPos();
+					Ray ray = { cam.getPos(), D.normalize() };
 
 
 					switch (constants::RENDER_MODE) {
@@ -126,7 +126,7 @@ void ofApp::colorRows(int start, int end) {
 
 						//If the ray hit something, find the color
 						if (min.obj) {
-							Point touched = camera + D * min.time;
+							Point touched = cam.getPos() + D * min.time;
 							total += Phong::calculateColor(touched, min.obj, ray, lights, objects);
 						}
 						break;
