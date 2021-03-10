@@ -32,8 +32,8 @@ raymarch::Hit raymarch::getNearestHit(const Ray& ray) {
 }
 
 //Returns true if there is an object between the point and the light that isn't the object itself
-bool raymarch::isShadowed(const Point& point, const Light* light, Object* obj) {
-	Ray ray = { point, (light->pos - point).getNormalized() };
+bool raymarch::isShadowed(const Point& point, const Point& lightPoint, Object* obj) {
+	Ray ray = { point, (lightPoint - point).normalize() };
 
 	Point moving = ray.P;
 	auto closest = raymarch::sceneSdf(moving);

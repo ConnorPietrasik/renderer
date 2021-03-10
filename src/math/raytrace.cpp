@@ -21,8 +21,8 @@ raytrace::Hit raytrace::getNearestHit(const Ray& ray) {
 }
 
 //Returns true if there is an object between the point and the light that isn't the object itself
-bool raytrace::isShadowed(const Point& point, const Light* light, Object* obj) {
-	Ray ray = { light->pos, (point - light->pos).normalize() };
+bool raytrace::isShadowed(const Point& point, const Point& lightPoint, Object* obj) {
+	Ray ray = { lightPoint, (point - lightPoint).normalize() };
 	double objT = obj->intersects(ray);
 
 	for (auto& o : Scene::getObjects()) {
@@ -61,85 +61,4 @@ float raytrace::getPortionLit(const Point& point, const Light* light, Object* ob
 	}
 
 	return (float)litParts / constants::SOFT_SHADOW_AMOUNT;
-}
-
-//Calculates the color of an object at a given point
-Color raytrace::calculateColor(const Point& pos, Object* obj, const Ray& ray, int reflectionCount) {
-
-	Color ambient = { 0, 0, 0 };
-	Color diffuse = { 0, 0, 0 };
-	Color specular = { 0, 0, 0 };
-
-	//Things that don't change with different light
-	Vector N = obj->getNormal(pos);
-	Vector V = ray.P - pos;
-	V.normalize();
-
-	for (auto& light : Scene::getLights()) {
-		//Ambient = cMat * cLight
-		ambient += obj->getColor() * light->ambient;
-
-		//Diffuse = cMat * cLight * N.L
-		Vector L = light->pos - pos;
-		L.normalize();
-
-		double nDotL = N.dot(L);
-
-		//So that it doesn't do negative colors if the light is in the other direction
-		if (nDotL > -0.001) {
-
-			if (constants::SOFT_SHADOW_AMOUNT == 1) {
-				if (!isShadowed(pos, light.get(), obj)) {
-
-					diffuse += obj->getColor() * light->diffuse * N.dot(L);
-
-					//Specular = cMat * cLight * (N.H)^S
-					if (obj->getShininess() != 0) {
-						Vector H = (V + L).normalize();
-						specular += obj->getSpecularColor() * light->specular * math::pow(N.dot(H), obj->getShininess());
-					}
-				}
-			}
-			else {
-				float shadowCorrect = getPortionLit(pos, light.get(), obj);
-
-				diffuse += obj->getColor() * light->diffuse * N.dot(L) * shadowCorrect;
-
-				//Specular = cMat * cLight * (N.H)^S
-				if (obj->getShininess() != 0) {
-					Vector H = (V + L).normalize();
-					specular += obj->getSpecularColor() * light->specular * math::pow(N.dot(H), obj->getShininess()) * shadowCorrect;
-				}
-			}
-		}
-	}
-
-	Color total = ambient + diffuse + specular;
-
-	if (obj->getReflectivity() > 0) {
-
-		Color refColor = { 0, 0, 0 };
-
-		if (reflectionCount > constants::MAX_REFLECTIONS) refColor = { 0.4, 0.4, 0.4 };
-		else {
-
-			//Reflected D = -V + 2N(V.N) normalized
-			Ray refRay = { pos, (-V + (N * 2) * V.dot(N)).normalize() };
-			Hit refMin = getNearestHit(refRay);
-
-			if (refMin.obj) {
-
-				Point touched = pos + refRay.D * refMin.time;
-				refColor = calculateColor(touched, refMin.obj, refRay, reflectionCount + 1);
-			}
-		}
-
-		total = refColor * obj->getReflectivity() + total * (1 - obj->getReflectivity());
-	}
-
-	if (total.r() > 1) total.r() = 1;
-	if (total.g() > 1) total.g() = 1;
-	if (total.b() > 1) total.b() = 1;
-
-	return total;
 }

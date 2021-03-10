@@ -18,7 +18,7 @@ namespace raymarch {
 
 	Hit getNearestHit(const Ray& ray);
 
-	bool isShadowed(const Point& point, const Light* light, Object* obj);
+	bool isShadowed(const Point& point, const Point& lightPoint, Object* obj);
 
 	//Returns the normal at a point using raymarching
 	Vector getNormalRM(const Point& p);

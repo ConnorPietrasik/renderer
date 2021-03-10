@@ -21,6 +21,9 @@ void ofApp::setup(){
 		}
 	}
 
+	//Set the shadow function for the Phong shader
+	Phong::setShadowedFunc(constants::RENDER_MODE == 0 ? raytrace::isShadowed : raymarch::isShadowed);
+
 	Scene::setCamPos({ 0, 0, 350 });
 
 	//Adding some spheres: (center, radius, normal_color, shininess, shiny_color, reflectivity)
@@ -38,9 +41,11 @@ void ofApp::setup(){
 	//Scene::addLight(new Light({ {0, 0, 100}, {0, 0.05, 0}, {0, 1, 0}, {0, 0.8, 0}, 20 }));
 
 	//TEST	/	NEW
-	Scene::addObject(new Torus());
-	Scene::addLight(new Light({ {0, 0, 350}, {0.05, 0, 0}, {0.5, 0, 0.7}, {0.8, 0, 0}, 20 }));
-	Scene::addObject(new Plane({ 0, 1, 1 }, 50));
+	//Scene::addObject(new Torus());
+	//Scene::addLight(new Light({ {0, 0, 350}, {0.05, 0, 0}, {0.5, 0, 0.7}, {0.8, 0, 0}, 20 }));
+	Scene::addLight(new Light({ {100, 100, 350}, {0.05, 0, 0}, {0.5, 0, 0.7}, {0.8, 0, 0}, 20 }));
+	//Scene::addObject(new Plane({ 0, 1, 1 }, 50));
+	Scene::addObject(new Sphere({-200, 0, -300}, 200));
 	//Scene::addObject(new Box());
 
 	//Walls

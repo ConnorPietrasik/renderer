@@ -12,9 +12,6 @@ class ofApp : public ofBaseApp{
 	int processorCount;
 
 	Color pixels[constants::IMAGE_WIDTH][constants::IMAGE_HEIGHT];
-	Camera cam;
-	std::vector<std::unique_ptr<Object>> objects;
-	std::vector<std::unique_ptr<Light>> lights;
 
 	//Function so it can be split into multiple threads
 	void colorRows(int start, int end);

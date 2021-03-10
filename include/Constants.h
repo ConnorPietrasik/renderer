@@ -4,8 +4,8 @@ namespace constants {
 	static const int IMAGE_HEIGHT = 1200;
 	static const int SCREEN_DISTANCE = 256;			//For a 90deg FOV
 	static const int MAX_REFLECTIONS = 20;
-	static const int ANTI_ALIASING_AMOUNT = 1;		//Sqrt of the amount of subpixels
-	static const int SOFT_SHADOW_AMOUNT = 1;		//Amount of random points on light to sample from
+	static const int ANTI_ALIASING_AMOUNT = 4;		//Sqrt of the amount of subpixels
+	static const int SOFT_SHADOW_AMOUNT = 5;		//Amount of random points on light to sample from
 	static const int MAX_DISTANCE = 1000;			//Max distance to render
 
 	//NEW

@@ -5,9 +5,30 @@
 #include "math/Vector.h"
 #include "Constants.h"
 #include "math/raymarch.h"
+#include "math/raytrace.h"
 #include "Scene.h"
 #include <vector>
 #include <memory>
+
+bool (*Phong::isShadowed)(const Point& point, const Point& lightPoint, Object* obj) = nullptr;
+
+//For soft shadows, checks the portion lit by the light
+float Phong::getPortionLit(const Point& point, const Light* light, Object* obj) {
+	int litParts = constants::SOFT_SHADOW_AMOUNT;
+
+	for (int i = 0; i < constants::SOFT_SHADOW_AMOUNT; i++) {
+		float theta = 2 * 3.1415 * ((float)(std::rand() % 1000) / 1000);		//I know <random> exists, but this is good enough
+		float phi = std::acos(2 * ((float)(std::rand() % 1000) / 1000) - 1);	//Seeded in main, fine if it isn't
+
+		Point lPoint = { light->pos.x + light->radius * std::cos(theta) * std::sin(phi),
+			light->pos.y + light->radius * std::sin(theta) * std::sin(phi), light->pos.z + light->radius * std::cos(phi) };
+
+		Ray ray = { lPoint, (point - lPoint).normalize() };
+		if (isShadowed(point, lPoint, obj)) litParts--;
+	}
+
+	return (float)litParts / constants::SOFT_SHADOW_AMOUNT;
+}
 
 //Calculates the color of an object at a given point
 Color Phong::calculateColor(const Point& pos, Object* obj, const Ray& ray) {
@@ -18,7 +39,6 @@ Color Phong::calculateColor(const Point& pos, Object* obj, const Ray& ray) {
 
 	//Things that don't change with different light
 	Vector N = obj->getNormal(pos);
-	//Vector N = raymarch::getNormalRM(pos);
 	Vector V = ray.P - pos;
 	V.normalize();
 
@@ -34,7 +54,7 @@ Color Phong::calculateColor(const Point& pos, Object* obj, const Ray& ray) {
 		if (N.dot(L) > 0) {
 
 			if (constants::SOFT_SHADOW_AMOUNT == 1) {
-				if (!raymarch::isShadowed(pos, light.get(), obj)) {
+				if (isShadowed == nullptr || !isShadowed(pos, light->pos, obj)) {
 
 					diffuse += obj->getColor() * light->diffuse * N.dot(L);
 
@@ -45,17 +65,17 @@ Color Phong::calculateColor(const Point& pos, Object* obj, const Ray& ray) {
 					}
 				}
 			}
-			//else {
-			//	float shadowCorrect = getPortionLit(pos, light.get(), obj, objects);
+			else {
+				float shadeCorrection = getPortionLit(pos, light.get(), obj);
 
-			//	diffuse += obj->getColor() * light->diffuse * N.dot(L) * shadowCorrect;
+				diffuse += obj->getColor() * light->diffuse * N.dot(L) * shadeCorrection;
 
-			//	//Specular = cMat * cLight * (N.H)^S
-			//	if (obj->getShininess() != 0) {
-			//		Vector H = (V + L).normalize();
-			//		specular += obj->getSpecularColor() * light->specular * math::pow(N.dot(H), obj->getShininess()) * shadowCorrect;
-			//	}
-			//}
+				//Specular = cMat * cLight * (N.H)^S
+				if (obj->getShininess() != 0) {
+					Vector H = (V + L).normalize();
+					specular += obj->getSpecularColor() * light->specular * math::pow(N.dot(H), obj->getShininess()) * shadeCorrection;
+				}
+			}
 		}
 	}
 
