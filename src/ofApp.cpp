@@ -123,20 +123,20 @@ void ofApp::colorRows(int start, int end) {
 					switch (constants::RENDER_MODE) {
 					case 0:
 
-						auto min = raytrace::getNearestHit(ray, Scene::getObjects());
+						auto min = raytrace::getNearestHit(ray);
 
 						//If the ray hit something, find the color
 						if (min.obj) {
 							Point touched = Scene::getCamPos() + D * min.time;
-							total += Phong::calculateColor(touched, min.obj, ray, Scene::getLights(), Scene::getObjects());
+							total += Phong::calculateColor(touched, min.obj, ray);
 						}
 						break;
 
 					//NEW
 					case 1:
 
-						auto hit = raymarch::getNearestHit(ray, Scene::getObjects());
-						if (hit.obj) total += Phong::calculateColor(hit.p, hit.obj, ray, Scene::getLights(), Scene::getObjects());
+						auto hit = raymarch::getNearestHit(ray);
+						if (hit.obj) total += Phong::calculateColor(hit.p, hit.obj, ray);
 
 					}
 				}

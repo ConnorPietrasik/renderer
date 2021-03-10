@@ -1,16 +1,17 @@
 #include "math/raytrace.h"
 #include "objects/Object.h"
 #include "math/Ray.h"
+#include "Constants.h"
+#include "Scene.h"
 #include <vector>
 #include <memory>
-#include "Constants.h"
 #include <cmath>
 #include <cstdlib>
 
 //Returns the nearest object hit with the time
-raytrace::Hit raytrace::getNearestHit(const Ray& ray, const std::vector<std::unique_ptr<Object>>& objects) {
+raytrace::Hit raytrace::getNearestHit(const Ray& ray) {
 	Hit min = { nullptr, constants::MAX_DISTANCE };
-	for (auto& o : objects) {
+	for (auto& o : Scene::getObjects()) {
 		double t = o->intersects(ray);
 		if (t > 0 && t < min.time) {
 			min = { o.get(), t };
@@ -20,11 +21,11 @@ raytrace::Hit raytrace::getNearestHit(const Ray& ray, const std::vector<std::uni
 }
 
 //Returns true if there is an object between the point and the light that isn't the object itself
-bool raytrace::isShadowed(const Point& point, const Light* light, Object* obj, const std::vector<std::unique_ptr<Object>>& objects) {
+bool raytrace::isShadowed(const Point& point, const Light* light, Object* obj) {
 	Ray ray = { light->pos, (point - light->pos).normalize() };
 	double objT = obj->intersects(ray);
 
-	for (auto& o : objects) {
+	for (auto& o : Scene::getObjects()) {
 		if (o.get() != obj) {
 			double t = o->intersects(ray);
 			if (t > 0 && t < objT) {
@@ -36,7 +37,7 @@ bool raytrace::isShadowed(const Point& point, const Light* light, Object* obj, c
 }
 
 //Returns a float between 0 and 1 for the amount of light not being blocked (for soft shadows)
-float raytrace::getPortionLit(const Point& point, const Light* light, Object* obj, const std::vector<std::unique_ptr<Object>>& objects) {
+float raytrace::getPortionLit(const Point& point, const Light* light, Object* obj) {
 	int litParts = constants::SOFT_SHADOW_AMOUNT;
 
 	for (int i = 0; i < constants::SOFT_SHADOW_AMOUNT; i++) {
@@ -48,7 +49,7 @@ float raytrace::getPortionLit(const Point& point, const Light* light, Object* ob
 
 		Ray ray = { lPoint, (point - lPoint).normalize() };
 		double objT = obj->intersects(ray);
-		for (auto& o : objects) {
+		for (auto& o : Scene::getObjects()) {
 			if (o.get() != obj) {
 				double t = o->intersects(ray);
 				if (t > 0 && t < objT) {
@@ -63,8 +64,7 @@ float raytrace::getPortionLit(const Point& point, const Light* light, Object* ob
 }
 
 //Calculates the color of an object at a given point
-Color raytrace::calculateColor(const Point& pos, Object* obj, const Ray& ray, const std::vector<std::unique_ptr<Light>>& lights,
-	const std::vector<std::unique_ptr<Object>>& objects, int reflectionCount) {
+Color raytrace::calculateColor(const Point& pos, Object* obj, const Ray& ray, int reflectionCount) {
 
 	Color ambient = { 0, 0, 0 };
 	Color diffuse = { 0, 0, 0 };
@@ -75,7 +75,7 @@ Color raytrace::calculateColor(const Point& pos, Object* obj, const Ray& ray, co
 	Vector V = ray.P - pos;
 	V.normalize();
 
-	for (auto& light : lights) {
+	for (auto& light : Scene::getLights()) {
 		//Ambient = cMat * cLight
 		ambient += obj->getColor() * light->ambient;
 
@@ -89,7 +89,7 @@ Color raytrace::calculateColor(const Point& pos, Object* obj, const Ray& ray, co
 		if (nDotL > -0.001) {
 
 			if (constants::SOFT_SHADOW_AMOUNT == 1) {
-				if (!isShadowed(pos, light.get(), obj, objects)) {
+				if (!isShadowed(pos, light.get(), obj)) {
 
 					diffuse += obj->getColor() * light->diffuse * N.dot(L);
 
@@ -101,7 +101,7 @@ Color raytrace::calculateColor(const Point& pos, Object* obj, const Ray& ray, co
 				}
 			}
 			else {
-				float shadowCorrect = getPortionLit(pos, light.get(), obj, objects);
+				float shadowCorrect = getPortionLit(pos, light.get(), obj);
 
 				diffuse += obj->getColor() * light->diffuse * N.dot(L) * shadowCorrect;
 
@@ -125,12 +125,12 @@ Color raytrace::calculateColor(const Point& pos, Object* obj, const Ray& ray, co
 
 			//Reflected D = -V + 2N(V.N) normalized
 			Ray refRay = { pos, (-V + (N * 2) * V.dot(N)).normalize() };
-			Hit refMin = getNearestHit(refRay, objects);
+			Hit refMin = getNearestHit(refRay);
 
 			if (refMin.obj) {
 
 				Point touched = pos + refRay.D * refMin.time;
-				refColor = calculateColor(touched, refMin.obj, refRay, lights, objects, reflectionCount + 1);
+				refColor = calculateColor(touched, refMin.obj, refRay, reflectionCount + 1);
 			}
 		}
 

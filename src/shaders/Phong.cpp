@@ -5,12 +5,12 @@
 #include "math/Vector.h"
 #include "Constants.h"
 #include "math/raymarch.h"
+#include "Scene.h"
 #include <vector>
 #include <memory>
 
 //Calculates the color of an object at a given point
-Color Phong::calculateColor(const Point& pos, Object* obj, const Ray& ray, const std::vector<std::unique_ptr<Light>>& lights,
-	const std::vector<std::unique_ptr<Object>>& objects) {
+Color Phong::calculateColor(const Point& pos, Object* obj, const Ray& ray) {
 
 	Color ambient = { 0, 0, 0 };
 	Color diffuse = { 0, 0, 0 };
@@ -18,11 +18,11 @@ Color Phong::calculateColor(const Point& pos, Object* obj, const Ray& ray, const
 
 	//Things that don't change with different light
 	//Vector N = obj->getNormal(pos);
-	Vector N = raymarch::getNormalRM(pos, objects);
+	Vector N = raymarch::getNormalRM(pos);
 	Vector V = ray.P - pos;
 	V.normalize();
 
-	for (auto& light : lights) {
+	for (auto& light : Scene::getLights()) {
 		//Ambient = cMat * cLight
 		ambient += obj->getColor() * light->ambient;
 
@@ -34,7 +34,7 @@ Color Phong::calculateColor(const Point& pos, Object* obj, const Ray& ray, const
 		if (N.dot(L) > 0) {
 
 			if (constants::SOFT_SHADOW_AMOUNT == 1) {
-				if (!raymarch::isShadowed(pos, light.get(), obj, objects)) {
+				if (!raymarch::isShadowed(pos, light.get(), obj)) {
 
 					diffuse += obj->getColor() * light->diffuse * N.dot(L);
 
