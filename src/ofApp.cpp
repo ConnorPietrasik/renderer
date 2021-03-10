@@ -32,8 +32,8 @@ void ofApp::setup(){
 	Scene::addObject(new Sphere({ 0, 160, 0 }, 30, { 1, 1, 1 }));
 
 	//Adding some triangles: (p0, p1, p2, normal_color, shininess, shiny_color, reflectivity)
-	//Scene::addObject(new Triangle({ -100, 0, -150 }, { 0, 90, 0 }, { -100, 200, -50 }, { 1, 1, 1 }, 1));
-	//Scene::addObject(new Triangle({ 100, 200, -50 }, { 0, 90, 0 }, { 100, 0, -150 }, { 1, 1, 1 }, 1));
+	Scene::addObject(new Triangle({ -100, 0, -150 }, { 0, 90, 0 }, { -100, 200, -50 }, { 1, 1, 1 }, 1));
+	Scene::addObject(new Triangle({ 100, 200, -50 }, { 0, 90, 0 }, { 100, 0, -150 }, { 1, 1, 1 }, 1));
 
 	//Adding some lights: (pos, ambient, diffuse, specular, radius)
 	//Scene::addLight(new Light({ {-200, 0, 100}, {0.05, 0, 0}, {1, 0, 0}, {0.8, 0, 0}, 20 }));
@@ -45,7 +45,7 @@ void ofApp::setup(){
 	//Scene::addLight(new Light({ {0, 0, 350}, {0.05, 0, 0}, {0.5, 0, 0.7}, {0.8, 0, 0}, 20 }));
 	Scene::addLight(new Light({ {100, 100, 350}, {0.05, 0, 0}, {0.5, 0, 0.7}, {0.8, 0, 0}, 20 }));
 	//Scene::addObject(new Plane({ 0, 1, 1 }, 50));
-	Scene::addObject(new Sphere({-200, 0, -300}, 200));
+	Scene::addObject(new Sphere({-400, 0, -600}, 400));
 	//Scene::addObject(new Box());
 
 	//Walls

@@ -37,7 +37,7 @@ Color Phong::calculateColor(const Point& pos, Object* obj, const Ray& ray) {
 	Color diffuse = { 0, 0, 0 };
 	Color specular = { 0, 0, 0 };
 
-	//Things that don't change with different light
+	//Things that don't change with different lights
 	Vector N = obj->getNormal(pos);
 	Vector V = ray.P - pos;
 	V.normalize();

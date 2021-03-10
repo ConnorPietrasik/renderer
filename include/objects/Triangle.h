@@ -49,14 +49,10 @@ public:
 		Vector pc = p - p2;
 		Vector nor = e0.cross(e2);
 
-		int test = (math::sign(e0.cross(nor).dot(pa)) +
-			math::sign(e1.cross(nor).dot(pb)) +
-			math::sign(e2.cross(nor).dot(pc) < 2.0));
-
 		return std::sqrt(
 			(math::sign(e0.cross(nor).dot(pa)) +
 			math::sign(e1.cross(nor).dot(pb)) +
-			math::sign(e2.cross(nor).dot(pc) < 2.0))
+			math::sign(e2.cross(nor).dot(pc)) < 2.0)
 			?
 			std::min(std::min(
 				(e0 * math::clamp(e0.dot(pa) / e0.magnitudeSquared(), 0.0, 1.0) - pa).magnitudeSquared(),
