@@ -2,6 +2,7 @@
 #include "math/Point.h"
 #include "Constants.h"
 #include "Scene.h"
+#include "objects/Object.h"
 #include <vector>
 #include <memory>
 
@@ -54,5 +55,15 @@ Vector raymarch::getNormalRM(const Point& p) {	//More or less taken from lecture
 	Vector n = { dp - raymarch::sceneSdf({p.x - eps, p.y, p.z}).dist,
 				dp - raymarch::sceneSdf({p.x, p.y - eps, p.z}).dist,
 				dp - raymarch::sceneSdf({p.x, p.y, p.z - eps}).dist };
+	return n.getNormalized();
+}
+
+//Returns the normal at a point using raymarching, but doesn't loop through all objects
+Vector raymarch::getNormalRM(const Point& p, Object* obj) {
+	double eps = 0.01;
+	double dp = obj->sdf(p);
+	Vector n = { dp - obj->sdf({p.x - eps, p.y, p.z}),
+				dp - obj->sdf({p.x, p.y - eps, p.z}),
+				dp - obj->sdf({p.x, p.y, p.z - eps}) };
 	return n.getNormalized();
 }

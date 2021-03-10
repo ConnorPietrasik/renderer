@@ -20,5 +20,9 @@ namespace raymarch {
 
 	bool isShadowed(const Point& point, const Light* light, Object* obj);
 
+	//Returns the normal at a point using raymarching
 	Vector getNormalRM(const Point& p);
+
+	//Same as above but focuses on the object to avoid wasting time
+	Vector getNormalRM(const Point& p, Object* obj);
 }

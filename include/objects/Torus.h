@@ -1,6 +1,7 @@
 #pragma once
 
 #include "objects/Object.h"
+#include "math/raymarch.h"
 
 //NEW
 class Torus : public Object {
@@ -40,7 +41,7 @@ public:
 
 	//TODO
 	Vector getNormal(const Point& touched) {
-		return { 0, 0, 0 };
+		return raymarch::getNormalRM(touched, this);
 	}
 
 	float getReflectivity() {
