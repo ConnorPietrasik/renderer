@@ -38,7 +38,8 @@ Color Phong::calculateColor(const Point& pos, Object* obj, const Ray& ray) {
 	Color specular = { 0, 0, 0 };
 
 	//Things that don't change with different lights
-	Vector N = obj->getNormal(pos);
+	//Vector N = obj->getNormal(pos);
+	Vector N = raymarch::getNormalRM(pos);
 	Vector V = ray.P - pos;
 	V.normalize();
 

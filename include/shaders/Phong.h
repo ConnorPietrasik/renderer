@@ -12,6 +12,8 @@ class Phong {
 	static bool (*isShadowed)(const Point& point, const Point& lightPoint, Object* obj);
 	static float getPortionLit(const Point& point, const Light* light, Object* obj);
 
+
+
 public:
 	static Color calculateColor(const Point& pos, Object* obj, const Ray& ray);
 

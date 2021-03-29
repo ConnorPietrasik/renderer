@@ -4,12 +4,14 @@
 
 //NEW
 class Plane : public Object {
-	Vector n;
-	double h;
 	Color normalColor;
 	Color specularColor;
 	float shininess;
 	float reflectivity;
+
+protected:
+	Vector n;
+	double h;
 
 public:
 	Plane(Vector normal = { 0, 1, 0 }, double height = 0, Color normalColor = {1, 1, 1}, float shininess = 0, Color specularColor = { 1, 1, 1 }, float reflectivity = 0) : 
@@ -18,7 +20,7 @@ public:
 	//TODO
 	double intersects(Ray ray) { return -1; }
 
-	double sdf(const Point& p) {	//Taken from https://www.iquilezles.org/www/articles/distfunctions/distfunctions.htm
+	virtual double sdf(const Point& p) {	//Taken from https://www.iquilezles.org/www/articles/distfunctions/distfunctions.htm
 		return n.dot(p) + h;
 	}
 

@@ -8,23 +8,24 @@
 #include "objects/Plane.h"
 #include "objects/Torus.h"
 #include "objects/Box.h"
+#include "objects/NoisyPlane.h"
 #include "Scene.h"
+#include "math/Matrix.h"
 
 
 //--------------------------------------------------------------
 void ofApp::setup(){
+	
+	//Matrix x;
+	//x.test();
+	//TEST
+	Scene::addObject(new Plane({ 0, 1, 0}, 50));
 
-	//Initialize to black TEST
-	for (auto& row : pixels) {
-		for (auto& p : row) {
-			p = { 0, 0, 0 };
-		}
-	}
 
 	//Set the shadow function for the Phong shader
 	Phong::setShadowedFunc(constants::RENDER_MODE == 0 ? raytrace::isShadowed : raymarch::isShadowed);
 
-	Scene::setCamPos({ 0, 0, 350 });
+	Scene::setCamPos({ 0, 10, 350 });
 
 	//Adding some spheres: (center, radius, normal_color, shininess, shiny_color, reflectivity)
 	Scene::addObject(new Sphere({ 0, 0, 0 }, 50, { 1, 1, 1 }, 5));
@@ -40,12 +41,12 @@ void ofApp::setup(){
 	//Scene::addLight(new Light({ {200, 0, 100}, {0, 0, 0.05}, {0, 0, 1}, {0, 0, 0.8}, 20 }));
 	//Scene::addLight(new Light({ {0, 0, 100}, {0, 0.05, 0}, {0, 1, 0}, {0, 0.8, 0}, 20 }));
 
-	//TEST	/	NEW
+	//TEST
 	//Scene::addObject(new Torus());
-	//Scene::addLight(new Light({ {0, 0, 350}, {0.05, 0, 0}, {0.5, 0, 0.7}, {0.8, 0, 0}, 20 }));
-	Scene::addLight(new Light({ {100, 100, 350}, {0.05, 0, 0}, {0.5, 0, 0.7}, {0.8, 0, 0}, 20 }));
+	Scene::addLight(new Light({ {0, 10, 350}, {0.05, 0, 0}, {0.5, 0, 0.7}, {0.8, 0, 0}, 20 }));
+	//Scene::addLight(new Light({ {100, 100, 350}, {0.05, 0, 0}, {0.5, 0, 0.7}, {0.8, 0, 0}, 20 }));
 	//Scene::addObject(new Plane({ 0, 1, 1 }, 50));
-	Scene::addObject(new Sphere({-400, 0, -600}, 400));
+	//Scene::addObject(new Sphere({-400, 0, -600}, 400));
 	//Scene::addObject(new Box());
 
 	//Walls

@@ -6,6 +6,9 @@
 #include <vector>
 #include <memory>
 
+//TEST
+#include "objects/Plane.h"
+
 //Returns the shortest distance to an object in the scene with the point and object pointer
 raymarch::Hit raymarch::sceneSdf(const Point& p) {
 	raymarch::Hit ret = {nullptr, p, constants::MARCH_MISS_THRESHOLD + 1};
@@ -37,12 +40,19 @@ bool raymarch::isShadowed(const Point& point, const Point& lightPoint, Object* o
 
 	Point moving = ray.P;
 	auto closest = raymarch::sceneSdf(moving);
-	for (int i = 0; i < constants::MARCH_ITER_LIMIT && closest.dist < constants::MARCH_MISS_THRESHOLD; i++) {
+	double lightDist = (lightPoint - point).magnitudeSquared();
+	double prevLightDist = constants::MARCH_MISS_THRESHOLD;
+	for (int i = 0; lightDist < prevLightDist && i < constants::MARCH_ITER_LIMIT && closest.dist < constants::MARCH_MISS_THRESHOLD; i++) {
 		if (closest.dist < constants::MARCH_HIT_THRESHOLD && closest.obj != obj) {
+
+			//TEST
+			//if (dynamic_cast<Plane*>(closest.obj)) printf("Point: (%.4f, %.4f, %.4f)\tMoving: (%.4f, %.4f, %.4f)\n", point.x, point.y, point.z, moving.x, moving.y, moving.z);
 			return true;
 		}
 		moving = moving + (ray.D * closest.dist);
 		closest = raymarch::sceneSdf(moving);
+		prevLightDist = lightDist;
+		lightDist = (lightPoint - moving).magnitudeSquared();
 	}
 
 	return false;
@@ -50,7 +60,7 @@ bool raymarch::isShadowed(const Point& point, const Point& lightPoint, Object* o
 
 //Returns the normal at a point using raymarching
 Vector raymarch::getNormalRM(const Point& p) {	//More or less taken from lecture slide
-	double eps = 0.01;
+	double eps = 0.001;
 	double dp = raymarch::sceneSdf(p).dist;
 	Vector n = { dp - raymarch::sceneSdf({p.x - eps, p.y, p.z}).dist,
 				dp - raymarch::sceneSdf({p.x, p.y - eps, p.z}).dist,
@@ -60,7 +70,7 @@ Vector raymarch::getNormalRM(const Point& p) {	//More or less taken from lecture
 
 //Returns the normal at a point using raymarching, but doesn't loop through all objects
 Vector raymarch::getNormalRM(const Point& p, Object* obj) {
-	double eps = 0.01;
+	double eps = 0.001;
 	double dp = obj->sdf(p);
 	Vector n = { dp - obj->sdf({p.x - eps, p.y, p.z}),
 				dp - obj->sdf({p.x, p.y - eps, p.z}),
