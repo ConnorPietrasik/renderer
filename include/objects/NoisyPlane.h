@@ -12,6 +12,13 @@ public:
 		Plane(normal, height, normalColor, shininess, specularColor, reflectivity), octaves(octaves), frequency(frequency), amplitude(amplitude) {}
 
 	double sdf(const Point& p) {
-		return n.dot(p) + h + glm::perlin(glm::vec3(p.x, p.y, p.z), glm::vec3(2.0f));
+
+		double noise = amplitude * glm::perlin(glm::vec3(frequency * p.x, frequency * p.y, frequency * p.z));
+
+		//I assumed I was allowed to use glm::perlin because you said we could use it for our work in the March 2nd lecture at 1:04:06
+		for (int i = 1; i < octaves; i++) {
+			noise += (amplitude / (2 * i)) * perlin(glm::vec3(2 * i * frequency * p.x, 2 * i * frequency * p.y, 2 * i * frequency * p.z));
+		}
+		return n.dot(p) + h + noise;
 	}
 };

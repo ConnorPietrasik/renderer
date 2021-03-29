@@ -19,13 +19,13 @@ void ofApp::setup(){
 	//Matrix x;
 	//x.test();
 	//TEST
-	Scene::addObject(new Plane({ 0, 1, 0}, 50));
+	Scene::addObject(new NoisyPlane({ 0, 1, 1}, -50, 2, 0.01, 200));
 
 
 	//Set the shadow function for the Phong shader
 	Phong::setShadowedFunc(constants::RENDER_MODE == 0 ? raytrace::isShadowed : raymarch::isShadowed);
 
-	Scene::setCamPos({ 0, 10, 350 });
+	Scene::setCamPos({ 0, 5, 350 });
 
 	//Adding some spheres: (center, radius, normal_color, shininess, shiny_color, reflectivity)
 	Scene::addObject(new Sphere({ 0, 0, 0 }, 50, { 1, 1, 1 }, 5));

@@ -15,7 +15,7 @@ protected:
 
 public:
 	Plane(Vector normal = { 0, 1, 0 }, double height = 0, Color normalColor = {1, 1, 1}, float shininess = 0, Color specularColor = { 1, 1, 1 }, float reflectivity = 0) : 
-		n(normal.getNormalized()), h(height), normalColor(normalColor), shininess(shininess), specularColor(specularColor), reflectivity(reflectivity) {}
+		n(normal.getNormalized()), h(-height), normalColor(normalColor), shininess(shininess), specularColor(specularColor), reflectivity(reflectivity) {}
 
 	//TODO
 	double intersects(Ray ray) { return -1; }
