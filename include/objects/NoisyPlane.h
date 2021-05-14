@@ -13,6 +13,7 @@ public:
 
 	double sdf(const Point& p) {
 
+		//TODO: Replace GLM perlin with own implementation or something
 		double noise = amplitude * glm::perlin(glm::vec3(frequency * p.x, frequency * p.y, frequency * p.z));
 
 		//I assumed I was allowed to use glm::perlin because you said we could use it for our work in the March 2nd lecture at 1:04:06

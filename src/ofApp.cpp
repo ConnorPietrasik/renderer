@@ -19,7 +19,7 @@ void ofApp::setup(){
 	//Matrix x;
 	//x.test();
 	//TEST
-	Scene::addObject(new NoisyPlane({ 0, 1, 1}, -50, 2, 0.01, 200));
+	//Scene::addObject(new NoisyPlane({ 0, 1, 1}, -50, 2, 0.01, 200));
 
 
 	//Set the shadow function for the Phong shader
