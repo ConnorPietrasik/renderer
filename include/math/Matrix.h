@@ -10,11 +10,11 @@ class Matrix {
 	int m, n;
 
 public:
-	Matrix(int m, int n) : vals(m, std::vector<double>(n)), m(m), n(n) {}
-
-	Matrix(std::vector<std::vector<double>> vals) : vals(vals), m(vals.size()), n(vals[0].size()) {}
+	Matrix(const std::vector<std::vector<double>>& vals) : vals(vals), m(vals.size()), n(vals[0].size()) {}
 
 	Matrix operator* (const Matrix& x);
+
+	Matrix& operator*= (const Matrix& x);
 
 	friend std::ostream& operator<< (std::ostream& out, const Matrix& m);
 };

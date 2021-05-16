@@ -21,6 +21,10 @@ void ofApp::setup(){
 	//TEST
 	//Scene::addObject(new NoisyPlane({ 0, 1, 1}, -50, 2, 0.01, 200));
 
+	Matrix x({ {1, 2, 3}, {4, 5, 6}});
+	Matrix y({ {7, 8}, {9, 10}, {11, 12} });
+	x *= y;
+	std::cout << x;
 
 	//Set the shadow function for the Phong shader
 	Phong::setShadowedFunc(constants::RENDER_MODE == 0 ? raytrace::isShadowed : raymarch::isShadowed);
