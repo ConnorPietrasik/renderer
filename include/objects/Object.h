@@ -9,7 +9,6 @@ public:
 	//Returns t of intersect
 	virtual double intersects(Ray ray) = 0;
 	
-	//NEW
 	//Returns the shortest distance from the point to the object, for use in ray marching
 	virtual double sdf(const Point& point) = 0;
 

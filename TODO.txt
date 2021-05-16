@@ -1,0 +1,12 @@
+Needed for final project:
+• Finish TransformedObject
+• Add at least one fractal
+
+For fun (no particular order):
+• Fix the shader mess, maybe make the object return percentage shadowed? The shader shouldn't need to know RT/RM ideally
+• Add ambient occlusion
+• Add Material to contain color and what not instead of each object having all that data
+• Add some sort of input file
+• Fix the CPU waste with the current draw system
+• Change implementation of perlin noise
+• Change the RT/RM so objects only need one function to check if they intersect a ray

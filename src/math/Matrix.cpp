@@ -15,6 +15,7 @@ Matrix Matrix::operator*(const Matrix& x) {
 	return ret;
 }
 
+//Post-multiply
 Matrix& Matrix::operator*=(const Matrix& x) {
 	if (n != x.m) throw std::invalid_argument("Left number of columns must equal right number of rows");
 	std::vector<std::vector<double>> ret(m, std::vector<double>(x.n, 0));
