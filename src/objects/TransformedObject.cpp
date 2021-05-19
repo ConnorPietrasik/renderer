@@ -18,14 +18,5 @@
 //Applies the opposite transformations in reverse order
 void TransformedObject::updateInverse() {
 	inverse = transform.getInverse();
-
-	/*inverse.makeIdentityMatrix();
-	for (auto i = history.rbegin(); i != history.rend(); ++i) {
-		switch (i->type) {
-		case 's':
-			inverse *= ofMatrix4x4::newScaleMatrix(1.0 / i->x, 1.0 / i->y, 1.0 / i->z);
-		}
-	}*/
-
 	isInverseGood = true;
 }

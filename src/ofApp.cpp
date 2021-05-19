@@ -11,6 +11,7 @@
 #include "objects/NoisyPlane.h"
 #include "objects/TransformedObject.h"
 #include "objects/RecursiveTetrahedron.h"
+#include "objects/SubtractObject.h"
 #include "Scene.h"
 #include "math/Matrix.h"
 
@@ -18,6 +19,17 @@
 //--------------------------------------------------------------
 void ofApp::setup(){
 	
+	//ofMatrix4x4 transform;
+	//transform *= ofMatrix4x4::newTranslationMatrix(0, 1, 0);
+	//auto inverse = transform.getInverse();
+
+	//ofVec3f point(0, 0, 0);
+
+	//std::cout << "Pre: " << point * inverse << '\n';
+	//std::cout << "Post: " << inverse * point << '\n';
+
+
+
 	//Matrix x = Matrix::identity();
 	//Point p = Point(5, 5, 5);
 
@@ -40,15 +52,20 @@ void ofApp::setup(){
 	Phong::setShadowedFunc(constants::RENDER_MODE == 0 ? raytrace::isShadowed : raymarch::isShadowed);
 
 	//Set the camera position
-	//Scene::setCamPos({ 0, 5, 350 });
-	Scene::setCamPos({ 0, 5, 50 });
-
-	//Scene::addObject(new RecursiveTetrahedron(1));
+	Scene::setCamPos({ 0, 5, 350 });
+	//Scene::setCamPos({ 0, 5, 50 });
 
 	//auto temp = new TransformedObject(new Sphere({0, 0, 0}, 1));
-	auto temp = new TransformedObject(new RecursiveTetrahedron(4));
-	temp->scale(20, 20, 20);
-	Scene::addObject(temp);
+	//auto temp = new TransformedObject(new RecursiveTetrahedron(4));
+	//auto temp = new TransformedObject(new Box(200, 200, 200));
+	//temp->scale(2, 2, 2);
+	//temp->translate(0, 400, 0);
+	//Scene::addObject(temp);
+
+	std::list<std::shared_ptr<Object>> l;
+	l.push_back(std::shared_ptr<Object>(new Box(600, 600, 600)));
+	Scene::addObject(new SubtractObject(new Box(200, 200, 200), l));
+
 
 	//Adding some spheres: (center, radius, normal_color, shininess, shiny_color, reflectivity)
 	//Scene::addObject(new Sphere({ 0, 0, 0 }, 50, { 1, 1, 1 }, 5));

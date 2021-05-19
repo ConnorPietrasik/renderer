@@ -39,11 +39,17 @@ public:
 		isInverseGood = false;
 	}
 
+	void translate(float x, float y, float z) {
+		transform *= ofMatrix4x4::newTranslationMatrix(x, y, z);
+		history.push_back({ 't', x, y, z });
+		isInverseGood = false;
+	}
+
 	double intersects(Ray ray) { return obj->intersects(ray); }
 
 	double sdf(const Point& p) {
 		if (!isInverseGood) updateInverse();
-		ofVec3f temp = inverse * ofVec3f(p.x, p.y, p.z);
+		ofVec3f temp =  ofVec3f(p.x, p.y, p.z) * inverse;
 		Point tp(temp.x, temp.y, temp.z);
 		double ret = obj->sdf(tp);
 		return ret;
