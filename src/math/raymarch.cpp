@@ -8,14 +8,18 @@
 
 //TEST
 #include "objects/Plane.h"
+#include <chrono>
+#include <iostream>
 
 //Returns the shortest distance to an object in the scene with the point and object pointer
 raymarch::Hit raymarch::sceneSdf(const Point& p) {
 	raymarch::Hit ret = {nullptr, p, constants::MARCH_MISS_THRESHOLD + 1};
+
 	for (auto& o : Scene::getObjects()) {
 		double d = o->sdf(p);
 		if (d < ret.dist) ret = {o.get(), p, d};
 	}
+
 	return ret;
 }
 

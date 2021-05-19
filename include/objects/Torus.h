@@ -23,7 +23,7 @@ public:
 
 	double sdf(const Point& p) {	//More or less taken from https://www.iquilezles.org/www/articles/distfunctions/distfunctions.htm
 		Vector temp = { p.x, 0, p.z };
-		Vector q = { temp.magnitude() - t.x, p.y - 200, 0 };	//TODO do transformations
+		Vector q = { temp.magnitude() - t.x, p.y, 0 };	//TODO do transformations
 		return q.magnitude() - t.y;
 	}
 

@@ -4,6 +4,9 @@
 #include "math/math.h"
 #include "math/Point.h"
 
+//TEST
+#include <iostream>
+
 class Sphere : public Object {
 	Point pos;
 	double radius;
@@ -31,7 +34,8 @@ public:
 	//NEW
 	//Returns the distance to the edge of the sphere
 	double sdf(const Point& p) {
-		return (p - pos).magnitude() - radius;	//Taken from lecture
+		double ret = (p - pos).magnitude() - radius;
+		return ret;	//Taken from lecture
 	}
 
 	Color& getColor() {

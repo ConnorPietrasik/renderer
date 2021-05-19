@@ -9,12 +9,12 @@ double math::pow(double x, int n) {
 		for (int i = 0; i < n - 1; i++) {
 			ret *= x;
 		}
+		return ret;
 	}
 	else {
 		for (int i = 0; i < -n - 1; i++) {
 			ret *= x;
 		}
-		ret = 1 / ret;
+		return 1 / ret;
 	}
-	return ret;
 }

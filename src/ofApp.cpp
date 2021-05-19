@@ -9,6 +9,8 @@
 #include "objects/Torus.h"
 #include "objects/Box.h"
 #include "objects/NoisyPlane.h"
+#include "objects/TransformedObject.h"
+#include "objects/RecursiveTetrahedron.h"
 #include "Scene.h"
 #include "math/Matrix.h"
 
@@ -16,29 +18,46 @@
 //--------------------------------------------------------------
 void ofApp::setup(){
 	
+	//Matrix x = Matrix::identity();
+	//Point p = Point(5, 5, 5);
+
+	//ofMatrix4x4 x2;
+	//ofVec3f p2(5, 5, 5);
+
+	//std::chrono::steady_clock::time_point beginTEST = std::chrono::steady_clock::now();
+
+	//auto result = x * p;
+
+	//std::chrono::steady_clock::time_point endTEST = std::chrono::steady_clock::now();
+	//std::cout << "Test complete! Time: " << std::chrono::duration_cast<std::chrono::nanoseconds>(endTEST - beginTEST).count() << "ns\n";
+
 	//Matrix x;
 	//x.test();
 	//TEST
 	//Scene::addObject(new NoisyPlane({ 0, 1, 1}, -50, 2, 0.01, 200));
 
-	Matrix x({ {1, 2, 3}, {4, 5, 6}});
-	Matrix y({ {7, 8}, {9, 10}, {11, 12} });
-	x *= y;
-	std::cout << x;
-
 	//Set the shadow function for the Phong shader
 	Phong::setShadowedFunc(constants::RENDER_MODE == 0 ? raytrace::isShadowed : raymarch::isShadowed);
 
-	Scene::setCamPos({ 0, 5, 350 });
+	//Set the camera position
+	//Scene::setCamPos({ 0, 5, 350 });
+	Scene::setCamPos({ 0, 5, 50 });
+
+	//Scene::addObject(new RecursiveTetrahedron(1));
+
+	//auto temp = new TransformedObject(new Sphere({0, 0, 0}, 1));
+	auto temp = new TransformedObject(new RecursiveTetrahedron(4));
+	temp->scale(20, 20, 20);
+	Scene::addObject(temp);
 
 	//Adding some spheres: (center, radius, normal_color, shininess, shiny_color, reflectivity)
-	Scene::addObject(new Sphere({ 0, 0, 0 }, 50, { 1, 1, 1 }, 5));
-	Scene::addObject(new Sphere({ 0, 90, 0 }, 40, { 1, 1, 1 }));
-	Scene::addObject(new Sphere({ 0, 160, 0 }, 30, { 1, 1, 1 }));
+	//Scene::addObject(new Sphere({ 0, 0, 0 }, 50, { 1, 1, 1 }, 5));
+	//Scene::addObject(new Sphere({ 0, 90, 0 }, 40, { 1, 1, 1 }));
+	//Scene::addObject(new Sphere({ 0, 160, 0 }, 30, { 1, 1, 1 }));
 
 	//Adding some triangles: (p0, p1, p2, normal_color, shininess, shiny_color, reflectivity)
-	Scene::addObject(new Triangle({ -100, 0, -150 }, { 0, 90, 0 }, { -100, 200, -50 }, { 1, 1, 1 }, 1));
-	Scene::addObject(new Triangle({ 100, 200, -50 }, { 0, 90, 0 }, { 100, 0, -150 }, { 1, 1, 1 }, 1));
+	//Scene::addObject(new Triangle({ -100, 0, -150 }, { 0, 90, 0 }, { -100, 200, -50 }, { 1, 1, 1 }, 1));
+	//Scene::addObject(new Triangle({ 100, 200, -50 }, { 0, 90, 0 }, { 100, 0, -150 }, { 1, 1, 1 }, 1));
 
 	//Adding some lights: (pos, ambient, diffuse, specular, radius)
 	//Scene::addLight(new Light({ {-200, 0, 100}, {0.05, 0, 0}, {1, 0, 0}, {0.8, 0, 0}, 20 }));
@@ -72,6 +91,7 @@ void ofApp::setup(){
 	SYSTEM_INFO sysinfo;
 	GetSystemInfo(&sysinfo);
 	processorCount = sysinfo.dwNumberOfProcessors;
+	//processorCount = 1;
 
 	//Output so the user knows it's running
 	std::cout << "Rendering using " << processorCount << " cores...\n";
@@ -114,6 +134,8 @@ void ofApp::draw(){
 
 //Does the ray tracing for a certain amount of rows to speed things up
 void ofApp::colorRows(int start, int end) {
+
+	//Only points in one direction for now, will improve eventually
 	Point topLeft = { Scene::getCamPos().x - (constants::IMAGE_WIDTH / 2), Scene::getCamPos().y + (constants::IMAGE_HEIGHT / 2), Scene::getCamPos().z - constants::SCREEN_DISTANCE };
 
 	for (int row = start; row < end; row++) {

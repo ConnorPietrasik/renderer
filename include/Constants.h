@@ -11,6 +11,6 @@ namespace constants {
 	//NEW
 	static const int RENDER_MODE = 1;				//Render mode, 0 for RT only, 1 for RM only, 2 for mixed. Probably will replace with an enum
 	static const int MARCH_MISS_THRESHOLD = 1000;	//Raymarching distance threshold for a miss
-	static const double MARCH_HIT_THRESHOLD = 0.05;		//Raymarching distance threshold for a hit
-	static const int MARCH_ITER_LIMIT = 200;		//Raymarching iteration limit
+	static const double MARCH_HIT_THRESHOLD = 0.5;		//Raymarching distance threshold for a hit
+	static const int MARCH_ITER_LIMIT = 100;		//Raymarching iteration limit
 }

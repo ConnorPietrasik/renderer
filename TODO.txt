@@ -10,3 +10,7 @@ For fun (no particular order):
 • Fix the CPU waste with the current draw system
 • Change implementation of perlin noise
 • Change the RT/RM so objects only need one function to check if they intersect a ray
+• Add camera lookat or similar
+• Change the doubles to floats, using doubles for everythig is see
+• Unify Vector and Point
+• Either use a different library or find some fast matrix multiplication code to avoid having to use OpenFrameworks
