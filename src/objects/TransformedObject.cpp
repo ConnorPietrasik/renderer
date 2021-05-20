@@ -20,3 +20,9 @@ void TransformedObject::updateInverse() {
 	inverse = transform.getInverse();
 	isInverseGood = true;
 }
+
+double TransformedObject::sdf(const Point& p) {
+	if (!isInverseGood) updateInverse();
+	ofVec3f temp = ofVec3f(p.x, p.y, p.z) * inverse;
+	return obj->sdf(Point(temp.x, temp.y, temp.z));
+}

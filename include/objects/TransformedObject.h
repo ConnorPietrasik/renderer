@@ -24,8 +24,8 @@ class TransformedObject : public Object {
 		float x;
 		float y;
 		float z;
+		float d;
 	};
-
 	std::list<transformation> history;
 
 	void updateInverse();
@@ -45,15 +45,20 @@ public:
 		isInverseGood = false;
 	}
 
+	void rotate(float degrees, float x, float y, float z) {
+		transform *= ofMatrix4x4::newRotationMatrix(degrees, x, y, z);
+		history.push_back({ 'r', x, y, z, degrees});
+		isInverseGood = false;
+	}
+
+	//To rotate about specific axes
+	void rotateX(float degrees) { rotate(degrees, 1, 0, 0); }
+	void rotateY(float degrees) { rotate(degrees, 0, 1, 0); }
+	void rotateZ(float degrees) { rotate(degrees, 0, 0, 1); }
+
 	double intersects(Ray ray) { return obj->intersects(ray); }
 
-	double sdf(const Point& p) {
-		if (!isInverseGood) updateInverse();
-		ofVec3f temp =  ofVec3f(p.x, p.y, p.z) * inverse;
-		Point tp(temp.x, temp.y, temp.z);
-		double ret = obj->sdf(tp);
-		return ret;
-	}
+	double sdf(const Point& p);
 
 	Color& getColor() { return obj->getColor(); }
 	Color& getSpecularColor() { return obj->getSpecularColor(); }

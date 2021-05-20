@@ -12,13 +12,16 @@
 #include "objects/TransformedObject.h"
 #include "objects/RecursiveTetrahedron.h"
 #include "objects/SubtractObject.h"
+#include "objects/UnionObject.h"
+#include "objects/IntersectObject.h"
+#include "objects/MengerSponge.h"
 #include "Scene.h"
 #include "math/Matrix.h"
 
 
 //--------------------------------------------------------------
-void ofApp::setup(){
-	
+void ofApp::setup() {
+
 	//ofMatrix4x4 transform;
 	//transform *= ofMatrix4x4::newTranslationMatrix(0, 1, 0);
 	//auto inverse = transform.getInverse();
@@ -55,6 +58,11 @@ void ofApp::setup(){
 	Scene::setCamPos({ 0, 5, 350 });
 	//Scene::setCamPos({ 0, 5, 50 });
 
+	auto temp = new TransformedObject(new MengerSponge(300));
+	//temp->rotate(45, 1, 1, 0);
+	//temp->rotateY(20);
+	Scene::addObject(temp);
+
 	//auto temp = new TransformedObject(new Sphere({0, 0, 0}, 1));
 	//auto temp = new TransformedObject(new RecursiveTetrahedron(4));
 	//auto temp = new TransformedObject(new Box(200, 200, 200));
@@ -62,9 +70,21 @@ void ofApp::setup(){
 	//temp->translate(0, 400, 0);
 	//Scene::addObject(temp);
 
-	std::list<std::shared_ptr<Object>> l;
-	l.push_back(std::shared_ptr<Object>(new Box(600, 600, 600)));
-	Scene::addObject(new SubtractObject(new Box(200, 200, 200), l));
+	//std::list<std::shared_ptr<Object>> l;
+	//l.push_back(std::shared_ptr<Object>(new Box(100, 100, 600)));
+	//auto temp = new TransformedObject(new SubtractObject(new Box(200, 200, 200), l));
+	//temp->translate(0, 400, 0);
+	//Scene::addObject(temp);
+
+	//std::list<std::shared_ptr<Object>> ul;
+	//ul.push_back(std::shared_ptr<Object>(new Sphere({ 0, 300, 0 }, 100)));
+	//ul.push_back(std::shared_ptr<Object>(new Box(200, 200, 200)));
+	//Scene::addObject(new UnionObject(ul));
+
+	//std::list<std::shared_ptr<Object>> il;
+	//il.push_back(std::shared_ptr<Object>(new Sphere({100, 100, 100}, 100)));
+	//il.push_back(std::shared_ptr<Object>(new Box(200, 200, 200)));
+	//Scene::addObject(new IntersectObject(il));
 
 
 	//Adding some spheres: (center, radius, normal_color, shininess, shiny_color, reflectivity)
@@ -181,7 +201,6 @@ void ofApp::colorRows(int start, int end) {
 						}
 						break;
 
-					//NEW
 					case 1:
 
 						auto hit = raymarch::getNearestHit(ray);
