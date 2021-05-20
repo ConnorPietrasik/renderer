@@ -2,8 +2,8 @@
 #include "math/math.h"
 #include <cmath>
 
-//Sets up the cross, -1 is infinite
 MengerSponge::MengerSponge(float size, int iterations) : box(1, 1, 1), size(size), iterations(iterations) {
+	//Sets up the cross, -1 is infinite
 	std::list<std::shared_ptr<Object>> temp;
 	temp.emplace_back(new Box(-1, 1, 1));
 	temp.emplace_back(new Box(1, -1, 1));

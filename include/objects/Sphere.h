@@ -4,9 +4,6 @@
 #include "math/math.h"
 #include "math/Point.h"
 
-//TEST
-#include <iostream>
-
 class Sphere : public Object {
 	Point pos;
 	double radius;
@@ -31,7 +28,6 @@ public:
 		return -DDotM - std::sqrt(sqrtpart);
 	}
 
-	//NEW
 	//Returns the distance to the edge of the sphere
 	double sdf(const Point& p) {
 		double ret = (p - pos).magnitude() - radius;

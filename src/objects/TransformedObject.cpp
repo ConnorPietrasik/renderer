@@ -15,12 +15,13 @@
 //	isInverseGood = true;
 //}
 
-//Applies the opposite transformations in reverse order
+//Just uses the matrix inverse since it's so fast
 void TransformedObject::updateInverse() {
 	inverse = transform.getInverse();
 	isInverseGood = true;
 }
 
+//Applies the inverse transformation matrix to the point, then uses sdf 
 double TransformedObject::sdf(const Point& p) {
 	if (!isInverseGood) updateInverse();
 	ofVec3f temp = ofVec3f(p.x, p.y, p.z) * inverse;

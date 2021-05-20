@@ -6,11 +6,6 @@
 #include <vector>
 #include <memory>
 
-//TEST
-#include "objects/Plane.h"
-#include <chrono>
-#include <iostream>
-
 //Returns the shortest distance to an object in the scene with the point and object pointer
 raymarch::Hit raymarch::sceneSdf(const Point& p) {
 	raymarch::Hit ret = {nullptr, p, constants::MARCH_MISS_THRESHOLD + 1};
@@ -48,9 +43,6 @@ bool raymarch::isShadowed(const Point& point, const Point& lightPoint, Object* o
 	double prevLightDist = constants::MARCH_MISS_THRESHOLD;
 	for (int i = 0; lightDist < prevLightDist && i < constants::MARCH_ITER_LIMIT && closest.dist < constants::MARCH_MISS_THRESHOLD; i++) {
 		if (closest.dist < constants::MARCH_HIT_THRESHOLD && closest.obj != obj) {
-
-			//TEST
-			//if (dynamic_cast<Plane*>(closest.obj)) printf("Point: (%.4f, %.4f, %.4f)\tMoving: (%.4f, %.4f, %.4f)\n", point.x, point.y, point.z, moving.x, moving.y, moving.z);
 			return true;
 		}
 		moving = moving + (ray.D * closest.dist);

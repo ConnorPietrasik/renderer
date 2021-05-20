@@ -4,6 +4,8 @@
 
 #include <iostream>
 
+//From http://blog.hvidtfeldts.net/index.php/2011/08/distance-estimated-3d-fractals-iii-folding-space/,
+//NOT CURRENTLY WORKING, gave up on this until later, in TODO list
 double RecursiveTetrahedron::sdf(const Point& p) {
 	Point offset;
 	Point math = p;

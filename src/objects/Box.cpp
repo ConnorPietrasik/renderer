@@ -3,6 +3,8 @@
 
 double Box::sdf(const Point& p) {	//More or less taken from https://www.iquilezles.org/www/articles/distfunctions/distfunctions.htm
 	Vector temp = { math::abs(p.x), math::abs(p.y), math::abs(p.z) };
+
+	//Made negative dimensions infinite for use in MergerSponge
 	float x = (dimensions.x < 0) ? 0.0 : math::max(temp.x - dimensions.x, 0.0);
 	float y = (dimensions.y < 0) ? 0.0 : math::max(temp.y - dimensions.y, 0.0);
 	float z = (dimensions.z < 0) ? 0.0 : math::max(temp.z - dimensions.z, 0.0);

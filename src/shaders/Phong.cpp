@@ -108,7 +108,4 @@ Color Phong::calculateColor(const Point& pos, Object* obj, const Ray& ray) {
 	if (total.b() > 1) total.b() = 1;
 
 	return total;
-
-	//TEST
-	//return Color(1, 0, 1);
 }
