@@ -14,7 +14,7 @@ class Sphere : public Object {
 	float reflectivity;
 
 public:
-	Sphere(const Point& center, double radius, Color normalColor = { 0.478, 0, 1 }, float shininess = 0, Color specularColor = {1, 1, 1}, float reflectivity = 0)
+	Sphere(const Point& center = { 0, 0, 0 }, double radius = 1, Color normalColor = { 0.478, 0, 1 }, float shininess = 0, Color specularColor = { 1, 1, 1 }, float reflectivity = 0)
 		: pos(center), radius(radius), radiusSquared(radius* radius), normalColor(normalColor), shininess(shininess), specularColor(specularColor), reflectivity(reflectivity) {}
 
 	//Uses the given formula to find if the ray intersects the sphere, and returns the first time it does

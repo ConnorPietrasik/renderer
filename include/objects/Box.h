@@ -12,7 +12,7 @@ class Box : public Object {
 
 public:
 	//Makes a box with the given dimensions, negative dimension means infinite
-	Box(float width = 10, float length = 10, float height = 10) : dimensions(width / 2, length / 2, height / 2), 
+	Box(float width = 1, float length = 1, float height = 1) : dimensions(width / 2, length / 2, height / 2), 
 		normalColor({ 1, 1, 1 }), shininess(0), specularColor({ 1, 1, 1 }), reflectivity(0) {};
 
 	//TODO

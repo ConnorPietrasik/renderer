@@ -5,6 +5,8 @@
 #include <memory>
 #include <list>
 
+#include "objects/Sphere.h"
+
 class MengerSponge : public Object {
 	Box box;
 	float size;
