@@ -25,16 +25,30 @@ void ofApp::setup() {
 	Phong::setShadowedFunc(constants::RENDER_MODE == 0 ? raytrace::isShadowed : raymarch::isShadowed);
 
 	//Set the camera position
-	Scene::setCamPos({ 0, 5, 350 });
+	Scene::setCamPos({ 0, 0, 250 });
 
 	//Objects
-	auto temp = new TransformedObject(new MengerSponge(600, 5));
-	//temp->rotate(50, 1, 1, 0);
-	//temp->rotateY(20);
+	//std::vector<Object*> objects = { new Sphere({0, 350, 0}, 300), new Sphere({0, -350, 0}, 300)};
+	//for (auto obj : objects) {
+	//	Scene::addObject(obj);
+	//}
+
+	auto temp = new TransformedObject(new Torus({ 200, 25, 75 }, { 1, 0.83, 0 }));
+	temp->rotateX(90);
 	Scene::addObject(temp);
 
+	auto t2 = new TransformedObject(new MengerSponge(200, 5));
+	t2->rotateX(45);
+	t2->rotateY(45);
+	Scene::addObject(t2);
+
+	auto t3 = new TransformedObject(new Torus({ 200, 25, 75 }, { 1, 0.83, 0 }));
+	t3->rotateX(90);
+	t3->translate(0, 0, 150);
+	Scene::addObject(t3);
+
 	//Lights
-	Scene::addLight(new Light({ {0, 10, 350}, {0.05, 0, 0}, {0.5, 0, 0.7}, {0.8, 0, 0}, 20 }));
+	Scene::addLight(new Light({ {0, 100, 350}, {0.02, 0, 0}, {1, 1, 1}, {0.8, 0, 0}, 20 }));
 
 	//Using all virtual processors for faster draws
 	SYSTEM_INFO sysinfo;

@@ -34,7 +34,7 @@ double RecursiveTetrahedron::sdf(const Point& p) {
 			dist = d;
 		}
 
-		math = math * scale - offset * (scale - 1.0);
+		math = (math * scale) - (offset * (scale - 1.0));
 	}
 
 	double ret = ((Vector)math).magnitude() * math::pow(scale, -iterations);

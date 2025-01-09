@@ -5,7 +5,7 @@
 
 class RecursiveTetrahedron : public Object {
 	int iterations;
-	Color test = { 0.478, 0, 1 };	//TEMP
+	Color test = { 478, 0, 1 };	//TEMP
 
 public:
 	RecursiveTetrahedron(int iterations) : iterations(iterations) {}
