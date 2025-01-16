@@ -1,5 +1,5 @@
 # Renderer
-This was my project for my computer graphics algorithms class, but I've added some stuff beyond that for fun / interest. Almost everything is done manually except for using openFrameworks matrix multiplication and to display the pixels (I made my own matrix multiplication, but openFrameworks was about 40x faster so I switched for now). Incluides soft shadows, reflections, anti-aliasing (supersampling), and multi-core rendering.
+This was my project for my computer graphics algorithms class, but I've added some stuff beyond that for fun / interest. Almost everything is done manually except for using openFrameworks matrix multiplication and to display the pixels (I made my own matrix multiplication, but openFrameworks was about 40x faster so I switched for now). Includes soft shadows, reflections, anti-aliasing (supersampling), and multi-core rendering.
 
 ## Examples
 Here are a few mostly-working examples:
